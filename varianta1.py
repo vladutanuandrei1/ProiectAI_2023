@@ -773,6 +773,10 @@ class CarRacing(gym.Env, EzPickle):
             pygame.quit()
 
 
+def tokyoDrift():
+    a[0] = 1
+    a[1] = 1
+
 if __name__ == "__main__":
     a = np.array([0.0, 0.0, 0.0])
 
@@ -815,7 +819,8 @@ if __name__ == "__main__":
         steps = 0
         restart = False
         while True:
-            register_input()
+            # register_input()
+            tokyoDrift()
             s, r, terminated, truncated, info = env.step(a)
             total_reward += r
             if steps % 200 == 0 or terminated or truncated:

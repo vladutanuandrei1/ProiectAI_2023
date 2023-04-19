@@ -1,26 +1,32 @@
-import gym
+import gymnasium
 import numpy as np
+import agent
 
-# Create an instance of the environment
-env = gym.make('CarRacing-v2')
 
-# Reset the environment to start a new game
-observation = env.reset()
+# Initializare Environment
 
-# Run a loop to play the game
-while True:
-    # Render the current state of the game
-    env.render()
+env = gymnasium.make("CarRacing-v2", render_mode="human")
+a = np.array([0.0, 0.0, 0.0])
 
-    # Choose an action to take
-    action = env.action_space.sample()
 
-    # Take the chosen action and get the new observation, reward, and done flag
-    observation, reward, done, info = env.step(action)
-
-    # If the game is over, break out of the loop
-    if done:
-        break
-
-# Close the environment
+quit = False
+while not quit:
+        env.reset()
+        total_reward = 0.0
+        steps = 0
+        restart = False
+        while True:
+            a =  agent.tokyoDrift(a)
+            s, r, terminated, truncated, info = env.step(a)
+            total_reward += r
+            if steps % 200 == 0 or terminated or truncated:
+                print("\naction " + str([f"{x:+0.2f}" for x in a]))
+                print(f"step {steps} total_reward {total_reward:+0.2f}")
+            steps += 1
+            if terminated or truncated or restart or quit:
+                break
 env.close()
+
+
+#STUPID IDEA
+# Make a Main Menu where the player can chose if want to play with keyboard or agent
