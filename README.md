@@ -1,1 +1,1 @@
-# ProiectAI_2023
+# ProiectAI 2023
